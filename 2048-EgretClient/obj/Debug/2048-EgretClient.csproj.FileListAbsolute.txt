@@ -1,0 +1,6 @@
+F:\Egret\2048-EgretClient\2048-EgretClient\bin\2048-EgretClient.dll.config
+F:\Egret\2048-EgretClient\2048-EgretClient\bin\2048-EgretClient.dll
+F:\Egret\2048-EgretClient\2048-EgretClient\bin\2048-EgretClient.pdb
+F:\Egret\2048-EgretClient\2048-EgretClient\obj\Debug\2048-EgretClient.csprojResolveAssemblyReference.cache
+F:\Egret\2048-EgretClient\2048-EgretClient\obj\Debug\2048-EgretClient.dll
+F:\Egret\2048-EgretClient\2048-EgretClient\obj\Debug\2048-EgretClient.pdb
