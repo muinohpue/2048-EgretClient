@@ -107,8 +107,9 @@ var Main = (function (_super) {
         this._operation.startListen();
     };
     __egretProto__._onMove = function (event) {
-        this.lastDirection = event.direction;
-        this._connection.sendMove(event.direction);
+        if (this._connection.sendMove(event.direction)) {
+            this.lastDirection = event.direction;
+        }
     };
     __egretProto__.onMoveDataGeted = function (event) {
         this.parseMoveData(event.data);

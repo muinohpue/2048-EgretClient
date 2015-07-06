@@ -40,9 +40,9 @@
 
     public _isProtocalSending: boolean = false;
 
-    public sendMove(direction: Direction): void {
+    public sendMove(direction: Direction): boolean {
         if (this._isProtocalSending) {
-            return;
+            return false;
         }
         this._isProtocalSending = true;
         Utils.showStatus("moving");
@@ -56,7 +56,8 @@
         request.data = new egret.URLVariables("direction=" + Direction[direction] + "&table=" + JSON.stringify(this._data.dataArr) + "");
         loader.load(request);
 
-        console.log("out "+JSON.stringify(this._data.dataArr));
+        console.log("out " + JSON.stringify(this._data.dataArr));
+        return true;
     }
 
     private onMoveComplete(event: egret.Event): void {

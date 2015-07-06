@@ -27,7 +27,7 @@ var Connection = (function (_super) {
     };
     __egretProto__.sendMove = function (direction) {
         if (this._isProtocalSending) {
-            return;
+            return false;
         }
         this._isProtocalSending = true;
         Utils.showStatus("moving");
@@ -40,6 +40,7 @@ var Connection = (function (_super) {
         request.data = new egret.URLVariables("direction=" + Direction[direction] + "&table=" + JSON.stringify(this._data.dataArr) + "");
         loader.load(request);
         console.log("out " + JSON.stringify(this._data.dataArr));
+        return true;
     };
     __egretProto__.onMoveComplete = function (event) {
         Utils.showStatus("ok");

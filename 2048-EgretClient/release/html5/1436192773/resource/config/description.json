@@ -1,0 +1,10 @@
+{
+    "anime_speed" : 80,
+    "server" : {
+        "protocol":"http",
+        "host":"192.168.1.107",
+        "port":"8000",
+        "url_start":"2048/start",
+        "url_move":"2048/move"
+    }
+}

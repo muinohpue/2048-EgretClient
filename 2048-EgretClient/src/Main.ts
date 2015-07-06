@@ -138,8 +138,9 @@ class Main extends egret.DisplayObjectContainer {
     private lastDirection: Direction;
 
     private _onMove(event: MoveEvent): void {
-        this.lastDirection = event.direction;
-        this._connection.sendMove(event.direction);
+        if (this._connection.sendMove(event.direction)) {
+            this.lastDirection = event.direction;
+        }
     }
 
     private onMoveDataGeted(event: egret.Event): void {
