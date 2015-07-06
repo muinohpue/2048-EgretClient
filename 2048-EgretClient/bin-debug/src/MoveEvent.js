@@ -9,3 +9,4 @@ var MoveEvent = (function (_super) {
     return MoveEvent;
 })(egret.Event);
 MoveEvent.prototype.__class__ = "MoveEvent";
+//# sourceMappingURL=MoveEvent.js.map

@@ -74,11 +74,11 @@ class Main extends egret.DisplayObjectContainer {
             var cellBg: egret.Shape = new egret.Shape;
             cellBg.graphics.beginFill(0xCCC0B4, 1);
             cellBg.graphics.drawRoundRect(0, 0,
-                GameData.CELL_SIDE, GameData.CELL_SIDE,
-                GameData.CELL_SIDE / 8, GameData.CELL_SIDE / 8);
+                Tile.CELL_SIDE, Tile.CELL_SIDE,
+                Tile.CELL_SIDE / 8, Tile.CELL_SIDE / 8);
             cellBg.graphics.endFill();
-            cellBg.x = board.x + GameData.GAME_BOARD_GAP + (i % 4) * (GameData.GAME_BOARD_GAP + GameData.CELL_SIDE);
-            cellBg.y = board.y + GameData.GAME_BOARD_GAP + Math.floor(i / 4) * (GameData.GAME_BOARD_GAP + GameData.CELL_SIDE);
+            cellBg.x = board.x + GameData.GAME_BOARD_GAP + (i % 4) * (GameData.GAME_BOARD_GAP + Tile.CELL_SIDE);
+            cellBg.y = board.y + GameData.GAME_BOARD_GAP + Math.floor(i / 4) * (GameData.GAME_BOARD_GAP + Tile.CELL_SIDE);
             this.addChild(cellBg);
         }
 
@@ -178,27 +178,8 @@ class Main extends egret.DisplayObjectContainer {
                 break;
         }
 
-        var str:string = this.convertToString(this._tileArr);
+        var str: string = Utils.tilesToString(this._tileArr);
         console.log("操作后的格子 " + str);
-
-        
-    }
-
-    private convertToString(arr: Tile[][]): string {
-        var str: string="";
-        for (var i: number = 0; i < GameData.CELL_MAX; i++) {
-            str += "[";
-            for (var j: number = 0; j < GameData.CELL_MAX; j++) {
-                if (arr[j][i] == null) {
-                    str += "0,";
-                } else {
-                    str += arr[j][i].value + ",";
-                }
-            }
-            str += "]\n";
-        }
-        str += "";
-        return str;
     }
 
     private parseTile(data: { value: number; "type": string; source: any; }, i:number, j:number): void {
@@ -292,5 +273,3 @@ class Main extends egret.DisplayObjectContainer {
         this.removeTile(tile);
     }
 }
-
-

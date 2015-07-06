@@ -1,9 +1,12 @@
 ﻿class Tile extends egret.Sprite {
     public static NEW_TILE_BY_MERGED: string = "new_tile_by_merged";
+
+    public static CELL_SIDE: number = 80;
+
     public static ANIME_TIME: number = 80; 
 
     private INIT_XY: number = GameData.GAME_BOARD_GAP;
-    private OFFSET_XY: number = GameData.CELL_SIDE + GameData.GAME_BOARD_GAP;
+    private OFFSET_XY: number = Tile.CELL_SIDE + GameData.GAME_BOARD_GAP;
 
     public value: number;
     public position: egret.Point;
@@ -24,11 +27,7 @@
         this.textField = new egret.TextField();
         this.addChild(this.textField);
         this.textField.x = 0;
-        this.textField.y = 17;
-        this.textField.width = 80;
-        this.textField.height = 80;
         this.textField.bold = true;
-        this.textField.size = 45;
         this.textField.textAlign = "center";
 
         this.setNumber(0);
@@ -39,10 +38,17 @@
         this.textField.text = num.toString();
         this.textField.textColor = this.getTextColor(num);
 
+        this.textField.size = 45;
+        while (this.textField.measuredWidth >= Tile.CELL_SIDE) {
+            this.textField.size--;
+        }
+        this.textField.width = Tile.CELL_SIDE;
+        this.textField.y = (Tile.CELL_SIDE - this.textField.measuredHeight) / 2;
+
         this.background.graphics.clear();
         this.background.graphics.beginFill(this.getBackgroundColor(num), 1);
-        this.background.graphics.drawRoundRect(0, 0, GameData.CELL_SIDE, GameData.CELL_SIDE,
-            GameData.CELL_SIDE / 8, GameData.CELL_SIDE / 8);
+        this.background.graphics.drawRoundRect(0, 0, Tile.CELL_SIDE, Tile.CELL_SIDE,
+            Tile.CELL_SIDE / 8, Tile.CELL_SIDE / 8);
         this.background.graphics.endFill();
     }
 

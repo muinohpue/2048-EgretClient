@@ -44,38 +44,20 @@ var Connection = (function (_super) {
     __egretProto__.onMoveComplete = function (event) {
         Utils.showStatus("ok");
         var data = JSON.parse(event.target.data);
-        var str = this.convertToString(data);
+        var str = Utils.svrDataToString(data);
         console.log("in " + str);
         this._data.convertDataFromServer(data);
         var event = new egret.Event(Connection.DATA_MOVED);
         event.data = data;
         this.dispatchEvent(event);
     };
-    __egretProto__.convertToString = function (arr) {
-        var str = "[";
-        for (var i = 0; i < GameData.CELL_MAX; i++) {
-            str += "[";
-            for (var j = 0; j < GameData.CELL_MAX; j++) {
-                if (arr[j][i] == null) {
-                    str += "0,";
-                }
-                else {
-                    str += arr[i][j].value + ",";
-                }
-            }
-            str += "]\n";
-        }
-        str += "]";
-        return str;
-    };
     //public static HOST: string = "localhost";
     //public static HOST: string = "192.168.1.107";
-    //public static URL_START: string = "http://" + Connection.HOST + ":8000/2048/start";
-    //public static URL_MOVE: string = "http://" + Connection.HOST + ":8000/2048/move";
-    Connection.URL_START = "";
-    Connection.URL_MOVE = "";
+    Connection.URL_START = ""; // "http://" + Connection.HOST + ":8000/2048/start";
+    Connection.URL_MOVE = ""; // "http://" + Connection.HOST + ":8000/2048/move";
     Connection.DATA_STARTED = "data_started";
     Connection.DATA_MOVED = "data_moved";
     return Connection;
 })(egret.EventDispatcher);
 Connection.prototype.__class__ = "Connection";
+//# sourceMappingURL=Connection.js.map

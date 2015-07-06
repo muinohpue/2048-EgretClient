@@ -22,15 +22,12 @@ var Main = (function (_super) {
     };
     __egretProto__.onPreLoaded = function (event) {
         RES.getResAsync("description", this.onDescriptionLoaded, this);
-        //var des_conn: any = RES.getRes("description").connection;
-        //Connection.URL_START = "http://localhost:8000/2048/start";
-        //Connection.URL_MOVE = "http://localhost:8000/2048/move";
-        //this.createGameScene();
     };
     __egretProto__.onDescriptionLoaded = function (data) {
-        var des_conn = data.connection;
-        Connection.URL_START = des_conn.protocol + "://" + des_conn.host + ":" + des_conn.port + "/" + des_conn.url_start;
-        Connection.URL_MOVE = des_conn.protocol + "://" + des_conn.host + ":" + des_conn.port + "/" + des_conn.url_move;
+        var svrDef = data.server;
+        Connection.URL_START = svrDef.protocol + "://" + svrDef.host + ":" + svrDef.port + "/" + svrDef.url_start;
+        Connection.URL_MOVE = svrDef.protocol + "://" + svrDef.host + ":" + svrDef.port + "/" + svrDef.url_move;
+        Tile.ANIME_TIME = data.anime_speed;
         this.createGameScene();
     };
     /**
@@ -60,10 +57,10 @@ var Main = (function (_super) {
         for (var i = 0; i < GameData.CELL_MAX * GameData.CELL_MAX; i++) {
             var cellBg = new egret.Shape;
             cellBg.graphics.beginFill(0xCCC0B4, 1);
-            cellBg.graphics.drawRoundRect(0, 0, GameData.CELL_SIDE, GameData.CELL_SIDE, GameData.CELL_SIDE / 8, GameData.CELL_SIDE / 8);
+            cellBg.graphics.drawRoundRect(0, 0, Tile.CELL_SIDE, Tile.CELL_SIDE, Tile.CELL_SIDE / 8, Tile.CELL_SIDE / 8);
             cellBg.graphics.endFill();
-            cellBg.x = board.x + GameData.GAME_BOARD_GAP + (i % 4) * (GameData.GAME_BOARD_GAP + GameData.CELL_SIDE);
-            cellBg.y = board.y + GameData.GAME_BOARD_GAP + Math.floor(i / 4) * (GameData.GAME_BOARD_GAP + GameData.CELL_SIDE);
+            cellBg.x = board.x + GameData.GAME_BOARD_GAP + (i % 4) * (GameData.GAME_BOARD_GAP + Tile.CELL_SIDE);
+            cellBg.y = board.y + GameData.GAME_BOARD_GAP + Math.floor(i / 4) * (GameData.GAME_BOARD_GAP + Tile.CELL_SIDE);
             this.addChild(cellBg);
         }
         this.gameContainer = new egret.Sprite();
@@ -147,25 +144,8 @@ var Main = (function (_super) {
                 }
                 break;
         }
-        var str = this.convertToString(this._tileArr);
+        var str = Utils.tilesToString(this._tileArr);
         console.log("操作后的格子 " + str);
-    };
-    __egretProto__.convertToString = function (arr) {
-        var str = "";
-        for (var i = 0; i < GameData.CELL_MAX; i++) {
-            str += "[";
-            for (var j = 0; j < GameData.CELL_MAX; j++) {
-                if (arr[j][i] == null) {
-                    str += "0,";
-                }
-                else {
-                    str += arr[j][i].value + ",";
-                }
-            }
-            str += "]\n";
-        }
-        str += "";
-        return str;
     };
     __egretProto__.parseTile = function (data, i, j) {
         var _this = this;
@@ -196,7 +176,7 @@ var Main = (function (_super) {
                 }
                 break;
         }
-        egret.Tween.get(this).wait(200).call(function () {
+        egret.Tween.get(this).wait(Tile.ANIME_TIME * 2).call(function () {
             _this._connection._isProtocalSending = false;
         });
     };
@@ -255,3 +235,4 @@ var Main = (function (_super) {
     return Main;
 })(egret.DisplayObjectContainer);
 Main.prototype.__class__ = "Main";
+//# sourceMappingURL=Main.js.map

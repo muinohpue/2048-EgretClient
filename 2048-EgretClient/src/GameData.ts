@@ -1,8 +1,7 @@
 ﻿class GameData {
     public static CELL_MAX = 4;
     public static GAME_BOARD_SIDE: number = GameData.CELL_MAX * 100;
-    public static CELL_SIDE: number = 80;
-    public static GAME_BOARD_GAP: number = (GameData.GAME_BOARD_SIDE - GameData.CELL_SIDE * GameData.CELL_MAX) / (GameData.CELL_MAX + 1);
+    public static GAME_BOARD_GAP: number = (GameData.GAME_BOARD_SIDE - Tile.CELL_SIDE * GameData.CELL_MAX) / (GameData.CELL_MAX + 1);
     public static GAME_BOARD_Y_DIFF: number = 80;
 
     private _dataArr: number[][];

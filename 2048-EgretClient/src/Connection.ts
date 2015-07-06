@@ -1,10 +1,8 @@
 ﻿class Connection extends egret.EventDispatcher{
     //public static HOST: string = "localhost";
     //public static HOST: string = "192.168.1.107";
-    //public static URL_START: string = "http://" + Connection.HOST + ":8000/2048/start";
-    //public static URL_MOVE: string = "http://" + Connection.HOST + ":8000/2048/move";
-    public static URL_START: string = "";
-    public static URL_MOVE: string = "";
+    public static URL_START: string = ""; // "http://" + Connection.HOST + ":8000/2048/start";
+    public static URL_MOVE: string = ""; // "http://" + Connection.HOST + ":8000/2048/move";
 
     public static DATA_STARTED: string = "data_started";
     public static DATA_MOVED: string = "data_moved";
@@ -70,7 +68,7 @@
             source: any;
         }[][] = JSON.parse(event.target.data);
 
-        var str: string = this.convertToString(data);
+        var str: string = Utils.svrDataToString(data);
         console.log("in " + str);
 
         this._data.convertDataFromServer(data);
@@ -78,22 +76,5 @@
         var event: egret.Event = new egret.Event(Connection.DATA_MOVED);
         event.data = data;
         this.dispatchEvent(event);
-    }
-
-    private convertToString(arr: { value: number; "type": string; source: any; }[][]): string {
-        var str: string = "[";
-        for (var i: number = 0; i < GameData.CELL_MAX; i++) {
-            str += "[";
-            for (var j: number = 0; j < GameData.CELL_MAX; j++) {
-                if (arr[j][i] == null) {
-                    str += "0,";
-                } else {
-                    str += arr[i][j].value + ",";
-                }
-            }
-            str += "]\n";
-        }
-        str += "]";
-        return str;
     }
 }

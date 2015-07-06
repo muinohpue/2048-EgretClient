@@ -36,9 +36,9 @@ var GameData = (function () {
     };
     GameData.CELL_MAX = 4;
     GameData.GAME_BOARD_SIDE = GameData.CELL_MAX * 100;
-    GameData.CELL_SIDE = 80;
-    GameData.GAME_BOARD_GAP = (GameData.GAME_BOARD_SIDE - GameData.CELL_SIDE * GameData.CELL_MAX) / (GameData.CELL_MAX + 1);
+    GameData.GAME_BOARD_GAP = (GameData.GAME_BOARD_SIDE - Tile.CELL_SIDE * GameData.CELL_MAX) / (GameData.CELL_MAX + 1);
     GameData.GAME_BOARD_Y_DIFF = 80;
     return GameData;
 })();
 GameData.prototype.__class__ = "GameData";
+//# sourceMappingURL=GameData.js.map

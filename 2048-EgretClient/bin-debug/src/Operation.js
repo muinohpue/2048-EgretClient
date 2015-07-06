@@ -51,3 +51,4 @@ var Operation = (function (_super) {
     return Operation;
 })(egret.EventDispatcher);
 Operation.prototype.__class__ = "Operation";
+//# sourceMappingURL=Operation.js.map

@@ -3,7 +3,7 @@ var Tile = (function (_super) {
     function Tile() {
         _super.call(this);
         this.INIT_XY = GameData.GAME_BOARD_GAP;
-        this.OFFSET_XY = GameData.CELL_SIDE + GameData.GAME_BOARD_GAP;
+        this.OFFSET_XY = Tile.CELL_SIDE + GameData.GAME_BOARD_GAP;
         this.createView();
     }
     var __egretProto__ = Tile.prototype;
@@ -14,11 +14,7 @@ var Tile = (function (_super) {
         this.textField = new egret.TextField();
         this.addChild(this.textField);
         this.textField.x = 0;
-        this.textField.y = 17;
-        this.textField.width = 80;
-        this.textField.height = 80;
         this.textField.bold = true;
-        this.textField.size = 45;
         this.textField.textAlign = "center";
         this.setNumber(0);
     };
@@ -26,9 +22,15 @@ var Tile = (function (_super) {
         this.value = num;
         this.textField.text = num.toString();
         this.textField.textColor = this.getTextColor(num);
+        this.textField.size = 45;
+        while (this.textField.measuredWidth >= Tile.CELL_SIDE) {
+            this.textField.size--;
+        }
+        this.textField.width = Tile.CELL_SIDE;
+        this.textField.y = (Tile.CELL_SIDE - this.textField.measuredHeight) / 2;
         this.background.graphics.clear();
         this.background.graphics.beginFill(this.getBackgroundColor(num), 1);
-        this.background.graphics.drawRoundRect(0, 0, GameData.CELL_SIDE, GameData.CELL_SIDE, GameData.CELL_SIDE / 8, GameData.CELL_SIDE / 8);
+        this.background.graphics.drawRoundRect(0, 0, Tile.CELL_SIDE, Tile.CELL_SIDE, Tile.CELL_SIDE / 8, Tile.CELL_SIDE / 8);
         this.background.graphics.endFill();
     };
     __egretProto__.setPosition = function (x, y) {
@@ -40,13 +42,13 @@ var Tile = (function (_super) {
     __egretProto__.moveTo = function (x, y) {
         this.position.x = x;
         this.position.y = y;
-        egret.Tween.get(this).to({ x: this.INIT_XY + this.OFFSET_XY * x, y: this.INIT_XY + this.OFFSET_XY * y }, 100);
+        egret.Tween.get(this).to({ x: this.INIT_XY + this.OFFSET_XY * x, y: this.INIT_XY + this.OFFSET_XY * y }, Tile.ANIME_TIME);
     };
     __egretProto__.mergeTo = function (x, y) {
         var _this = this;
         this.position.x = x;
         this.position.y = y;
-        egret.Tween.get(this).to({ x: this.INIT_XY + this.OFFSET_XY * x, y: this.INIT_XY + this.OFFSET_XY * y }, 100).call(function (onMerged) {
+        egret.Tween.get(this).to({ x: this.INIT_XY + this.OFFSET_XY * x, y: this.INIT_XY + this.OFFSET_XY * y }, Tile.ANIME_TIME).call(function (onMerged) {
             _this.alpha = 0;
             var event = new egret.Event(Tile.NEW_TILE_BY_MERGED);
             event.data = { x: x, y: y };
@@ -55,11 +57,11 @@ var Tile = (function (_super) {
     };
     __egretProto__.appear = function () {
         this.scaleX = this.scaleY = this.alpha = 0;
-        egret.Tween.get(this).wait(100).to({ scaleX: 1.0, scaleY: 1.0, alpha: 1 }, 100);
+        egret.Tween.get(this).wait(Tile.ANIME_TIME).to({ scaleX: 1.0, scaleY: 1.0, alpha: 1 }, Tile.ANIME_TIME);
     };
     __egretProto__.merging = function () {
         this.scaleX = this.scaleY = 1.1;
-        egret.Tween.get(this).to({ scaleX: 1.0, scaleY: 1.0 }, 100);
+        egret.Tween.get(this).to({ scaleX: 1.0, scaleY: 1.0 }, Tile.ANIME_TIME);
     };
     __egretProto__.getBackgroundColor = function (num) {
         switch (num) {
@@ -114,6 +116,9 @@ var Tile = (function (_super) {
         }
     };
     Tile.NEW_TILE_BY_MERGED = "new_tile_by_merged";
+    Tile.CELL_SIDE = 80;
+    Tile.ANIME_TIME = 80;
     return Tile;
 })(egret.Sprite);
 Tile.prototype.__class__ = "Tile";
+//# sourceMappingURL=Tile.js.map

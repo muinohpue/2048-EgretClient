@@ -28,43 +28,46 @@
     */
     private onConfigComplete(event: RES.ResourceEvent): void {
         RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
-        RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
-        RES.addEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.onResourceLoadError, this);
-        RES.addEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress, this);
-        RES.loadGroup("preload");
+
+        this.dispatchEvent(new egret.Event(ResLoader.PRELOAD_COMPLETE));
+
+        //RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
+        //RES.addEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.onResourceLoadError, this);
+        //RES.addEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress, this);
+        //RES.loadGroup("preload");
     }
 
     /**
      * preload资源组加载完成
      */
-    private onResourceLoadComplete(event: RES.ResourceEvent): void {
-        if (event.groupName == "preload") {
-            this.stage.removeChild(this.loadingView);
-            RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
-            RES.removeEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.onResourceLoadError, this);
-            RES.removeEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress, this);
-            this.dispatchEvent(new egret.Event(ResLoader.PRELOAD_COMPLETE));
-        }
-    }
+    //private onResourceLoadComplete(event: RES.ResourceEvent): void {
+    //    if (event.groupName == "preload") {
+    //        this.stage.removeChild(this.loadingView);
+    //        RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
+    //        RES.removeEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.onResourceLoadError, this);
+    //        RES.removeEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress, this);
+    //        this.dispatchEvent(new egret.Event(ResLoader.PRELOAD_COMPLETE));
+    //    }
+    //}
 
-    /**
-     * 资源组加载出错
-     *  The resource group loading failed
-     */
-    private onResourceLoadError(event: RES.ResourceEvent): void {
-        //TODO
-        console.warn("Group:" + event.groupName + " has failed to load");
-        //忽略加载失败的项目
-        //Ignore the loading failed projects
-        this.onResourceLoadComplete(event);
-    }
+    ///**
+    // * 资源组加载出错
+    // *  The resource group loading failed
+    // */
+    //private onResourceLoadError(event: RES.ResourceEvent): void {
+    //    //TODO
+    //    console.warn("Group:" + event.groupName + " has failed to load");
+    //    //忽略加载失败的项目
+    //    //Ignore the loading failed projects
+    //    this.onResourceLoadComplete(event);
+    //}
 
-    /**
-     * preload资源组加载进度
-     */
-    private onResourceProgress(event: RES.ResourceEvent): void {
-        if (event.groupName == "preload") {
-            this.loadingView.setProgress(event.itemsLoaded, event.itemsTotal);
-        }
-    }
+    ///**
+    // * preload资源组加载进度
+    // */
+    //private onResourceProgress(event: RES.ResourceEvent): void {
+    //    if (event.groupName == "preload") {
+    //        this.loadingView.setProgress(event.itemsLoaded, event.itemsTotal);
+    //    }
+    //}
 } 
