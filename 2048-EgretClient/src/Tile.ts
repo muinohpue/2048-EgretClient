@@ -1,5 +1,6 @@
 ﻿class Tile extends egret.Sprite {
     public static NEW_TILE_BY_MERGED: string = "new_tile_by_merged";
+    public static ANIME_TIME: number = 80; 
 
     private INIT_XY: number = GameData.GAME_BOARD_GAP;
     private OFFSET_XY: number = GameData.CELL_SIDE + GameData.GAME_BOARD_GAP;
@@ -57,14 +58,14 @@
         this.position.x = x;
         this.position.y = y;
 
-        egret.Tween.get(this).to({ x: this.INIT_XY + this.OFFSET_XY * x, y: this.INIT_XY + this.OFFSET_XY * y }, 100);
+        egret.Tween.get(this).to({ x: this.INIT_XY + this.OFFSET_XY * x, y: this.INIT_XY + this.OFFSET_XY * y }, Tile.ANIME_TIME);
     }
 
     public mergeTo(x: number, y: number) {
         this.position.x = x;
         this.position.y = y;
 
-        egret.Tween.get(this).to({ x: this.INIT_XY + this.OFFSET_XY * x, y: this.INIT_XY + this.OFFSET_XY * y }, 100).call(onMerged => {
+        egret.Tween.get(this).to({ x: this.INIT_XY + this.OFFSET_XY * x, y: this.INIT_XY + this.OFFSET_XY * y }, Tile.ANIME_TIME).call(onMerged => {
             this.alpha = 0;
             var event: egret.Event = new egret.Event(Tile.NEW_TILE_BY_MERGED);
             event.data = {x, y};
@@ -74,12 +75,12 @@
 
     public appear() {
         this.scaleX = this.scaleY = this.alpha = 0;
-        egret.Tween.get(this).wait(100).to({ scaleX: 1.0, scaleY: 1.0, alpha:1}, 100);
+        egret.Tween.get(this).wait(Tile.ANIME_TIME).to({ scaleX: 1.0, scaleY: 1.0, alpha:1}, Tile.ANIME_TIME);
     }
 
     public merging() {
         this.scaleX = this.scaleY = 1.1;
-        egret.Tween.get(this).to({ scaleX: 1.0, scaleY: 1.0 }, 100);
+        egret.Tween.get(this).to({ scaleX: 1.0, scaleY: 1.0 }, Tile.ANIME_TIME);
     }
 
     private getBackgroundColor(num: number): number {

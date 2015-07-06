@@ -28,16 +28,15 @@ class Main extends egret.DisplayObjectContainer {
     
     private onPreLoaded(event: egret.Event): void {
         RES.getResAsync("description", this.onDescriptionLoaded, this);
-        //var des_conn: any = RES.getRes("description").connection;
-        //Connection.URL_START = "http://localhost:8000/2048/start";
-        //Connection.URL_MOVE = "http://localhost:8000/2048/move";
-        //this.createGameScene();
     }
 
     private onDescriptionLoaded(data: any): void {
-        var des_conn: any = data.connection;
-        Connection.URL_START = des_conn.protocol + "://" + des_conn.host + ":" + des_conn.port + "/" + des_conn.url_start;
-        Connection.URL_MOVE = des_conn.protocol + "://" + des_conn.host + ":" + des_conn.port + "/" + des_conn.url_move;
+        var svrDef: any = data.server;
+        Connection.URL_START = svrDef.protocol + "://" + svrDef.host + ":" + svrDef.port + "/" + svrDef.url_start;
+        Connection.URL_MOVE = svrDef.protocol + "://" + svrDef.host + ":" + svrDef.port + "/" + svrDef.url_move;
+        
+        Tile.ANIME_TIME = data.anime_speed;
+        
         this.createGameScene();
     }
 
@@ -230,7 +229,7 @@ class Main extends egret.DisplayObjectContainer {
                 break;
         }
 
-        egret.Tween.get(this).wait(200).call(() => {
+        egret.Tween.get(this).wait(Tile.ANIME_TIME * 2).call(() => {
             this._connection._isProtocalSending = false;
         });
     }
